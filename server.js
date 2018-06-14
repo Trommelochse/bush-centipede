@@ -8,11 +8,10 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); 
-app.use(cors);
+app.use(cors());
 
 // DB config
 const mongoose = require('mongoose');
-
 mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds259410.mlab.com:59410/raw-terms`);
 
 // Schemas
@@ -32,4 +31,4 @@ app.post("/terms", (req, res) => {
 });
 
 // Listener
-const listener = app.listen(process.env.PORT, () => console.log('listening...'));
+const listener = app.listen(process.env.PORT, () => console.log('listening on:' + process.env.PORT));
