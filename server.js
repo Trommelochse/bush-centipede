@@ -21,12 +21,17 @@ const rawListSchema = new Schema({
   list: [Schema.Types.ObjectId]
 });
 
+// Models
+const RawList = mongoose.model('RawList', rawListSchema);
+
 // Routes
 app.get("/", (req, res) => {
   res.send(`listening on port: ${process.env.PORT}`);
 });
 app.post("/terms", (req, res) => {
-  console.log(req.body, typeof req.body);
+  console.log(req.body);
+  const rawList = new RawList({ list: req.body });
+  rawList.save( err => console.log(err) );
   res.send(null);
 });
 
