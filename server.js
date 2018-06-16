@@ -6,7 +6,7 @@ const cors = require('cors');
 // App config
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); 
 app.use(cors());
 
@@ -18,7 +18,7 @@ mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds2594
 const Schema = mongoose.Schema;
 
 const rawListSchema = new Schema({
-  list: [Schema.Types.ObjectId]
+  list: [Schema.Types.Mixed]
 });
 
 // Models
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 });
 app.post("/terms", (req, res) => {
   console.log(req.body);
-  const rawList = new RawList({ list: req.body });
+  const rawList = new RawList(req.body);
   rawList.save( err => console.log(err) );
   res.send(null);
 });
