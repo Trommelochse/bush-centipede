@@ -12,7 +12,7 @@ app.use(cors());
 
 // DB config
 const mongoose = require('mongoose');
-mongoose.connect(process.env.MONGODB);
+mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds259410.mlab.com:59410/raw-terms;`)
 
 // Models
 const RawList = require('./models/RawList');
