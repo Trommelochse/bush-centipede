@@ -15,7 +15,7 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB);
 
 // Models
-const RawListModel = require('./models/RawList');
+const RawList = require('./models/RawList');
 
 // Routes
 app.get("/", (req, res) => {
