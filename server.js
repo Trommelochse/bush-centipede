@@ -12,17 +12,10 @@ app.use(cors());
 
 // DB config
 const mongoose = require('mongoose');
-mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@ds259410.mlab.com:59410/raw-terms`);
-
-// Schemas
-const Schema = mongoose.Schema;
-
-const rawListSchema = new Schema({
-  list: [Schema.Types.Mixed]
-});
+mongoose.connect(process.env.MONGODB);
 
 // Models
-const RawList = mongoose.model('RawList', rawListSchema);
+const RawList = require('./models/RawList');
 
 // Routes
 app.get("/", (req, res) => {
@@ -32,7 +25,7 @@ app.post("/terms", (req, res) => {
   console.log(req.body);
   const rawList = new RawList(req.body);
   rawList.save( err => console.log(err) );
-  res.send(null);
+  res.send(rawList || null);
 });
 
 // Listener
