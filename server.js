@@ -21,8 +21,19 @@ const RawList = require('./models/RawList');
 app.get("/", (req, res) => {
   res.send(`listening on port: ${process.env.PORT}`);
 });
+
+app.get("/terms", (req, res) => {
+  RawList.find({})
+    .exec((err, items) => {
+      if (err) {
+        console.log('Error: ' + err);
+      } else {
+        res.json(items);
+      }
+    });
+});
+
 app.post("/terms", (req, res) => {
-  console.log(req.body);
   const rawList = new RawList(req.body);
   rawList.save( err => console.log(err) );
   res.send(rawList || null);
